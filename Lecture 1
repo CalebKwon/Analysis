@@ -1,2 +1,6 @@
-# Analysis
-직무 중심
+# 데이터 importing
+# 데이터 exporting
+# 데이터 handling(data.frame, merge, rbind, cbind)
+# 원 데이터셋에서 조건에 맞는 subdata set 뽑아내기
+# 기초 통계(평균,표준편차,중앙값,quantile,상관 계수)
+# 기초 통계 시각화 그래프 그리기 
