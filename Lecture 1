@@ -4,3 +4,585 @@
 # 원 데이터셋에서 조건에 맞는 subdata set 뽑아내기
 # 기초 통계(평균,표준편차,중앙값,quantile,상관 계수)
 # 기초 통계 시각화 그래프 그리기 
+
+### public dataset
+# https://www.data.go.kr/#/L21haW4=
+# http://data.seoul.go.kr/
+
+#### Open Big Data
+# https://www.datastore.or.kr/product/openBigDataList.do
+
+# 간단한 산술 연산
+1+1
+
+1-1
+
+10^3
+
+(3+4+5)/3
+
+
+# 데이터 할당 
+a+x
+
+a<-1
+x<-3
+
+a+x
+
+a * 5
+
+
+# Manipulation of Data
+ki<-c(170,171,172,173,174,175,176,177,178,179,180)
+
+# 5th number
+ki[5]
+
+# 합
+sum(ki)
+
+# 평균 
+mean(ki)
+
+# list : 서로 데이터 구조를 묶을 수 있음-성격이 다른 데이터(백터, 행렬, 데이터 프레임 등 모든 데이터)
+
+
+# 1개의 원소를 갖는 리스트
+x = c(1,2,3,4,5)
+y = c(-1,-2,-3,-4,-5)
+
+x+y
+
+x * y
+
+
+####################################################
+################ Q. 아래 각각의 코드의 답은? #############
+####################################################
+
+x = c(1,3,5,7,9)
+y = c(2,3,5,7,11,13) 
+
+#	1.	 x+1
+#	2.	 y*2
+#	3.	length(x) and length(y)
+#	4.	 x + y
+# 5.   x[x>=5]
+#	6.	sum(x>5) 
+# 7.  sum(x[x>5])
+#	8.	sum(x<7 & x> 3) # read | as 'or', & and 'and'
+#	9.	y[3]
+#	10.	y[-3]
+#	11. y[c(2,3,10)] (What is NA?)
+
+# R 결측값 확인 및 처리: is.na(), sum(is.na()), na.rm=TRUE, na.omit(), complete.cases()
+# 결측값의 이해 PPT 참조
+x <- c(1, 2, 3, 4, NA, 6, 7, 8, 9, NA)
+
+is.na(x)
+
+sum(is.na(x))
+
+sum(x)
+
+mean(x)
+
+sum(x, na.rm = TRUE)
+
+mean(x, na.rm = TRUE)
+
+library(MASS)
+is.na(Cars93)
+str(Cars93)
+
+# Cars93 데이터 프레임에 결측값 갯수 총 합계 구하기
+sum(is.na(Cars93))
+
+# Cars93 의 각 변수별로 결측값 개수 구하기 (27개 중에서 4개만 예시로 함)
+sum(is.na(Cars93$Manufacturer)) 
+sum(is.na(Cars93$Price))
+sum(is.na(Cars93$Rear.seat.room))
+sum(is.na(Cars93$Luggage.room))
+colSums(is.na(Cars93))
+
+sum(Cars93$Luggage.room)
+
+mean(Cars93$Luggage.room)
+
+sum(Cars93$Luggage.room, na.rm = TRUE)
+
+mean(Cars93$Luggage.room, na.rm = TRUE)
+
+Cars93_1 <- na.omit(Cars93)
+str(Cars93_1)
+str(Cars93)
+
+# 데이터프레임의 모든 행의 결측값을 특정 값(가령, '0')으로 일괄 대체 
+# dataset[is.na(dataset)] <- 0
+
+
+# 데이터 불러오기
+getwd()
+setwd("yourpath")
+
+# data 불러오기
+# load medical data
+data<-read.csv(file.choose())
+data<-read.csv("filename",header =TRUE)
+data<-read.csv("yourpath",header =TRUE)
+
+# 데이터의 구조 보여주기
+str(data) 
+dim(data)
+# 데이터 요약
+summary(data)
+
+# 열 데이터 뽑아내기
+data$###
+
+# data 정렬하기
+newdata<-data[order(data$@@@),]
+# newdata<-data[order(-data$@@@),]
+
+# sort by %%% and &&&
+newdata <- data[order(data$%%%, data$&&&),]
+
+#sort by %%% (ascending) and &&& (descending)
+newdata <- data[order(data$%%%, -data$&&&),] 
+
+# 데이터 나이&BMI에 의해 정렬하고 두셋으로 나누고 rbind cbind 이용 합치기 
+# rbind & cbind
+
+# rbind
+data1<-data[1:75,]
+data2<-data[76:150,]
+r<-rbind(data1,data2)
+
+# cbind
+data1<-data[,1:3]
+data2<-data[,4:5]
+c<-cbind(data1,data2)
+
+# csv 파일로 저장하기
+write.csv("저장할 데이터","pathway/newdataname.csv")
+
+# merge
+df1 = data.frame(CustomerId = c(1:6), Product = c(rep("Toaster", 3), rep("Radio", 3)))
+df2 = data.frame(CustomerId = c(2, 4, 6), State = c(rep("Alabama", 2), rep("Ohio", 1)))
+
+# merge two data frames by ID
+total <- merge(data frameA,data frameB,by="CustomerId")
+
+
+######## more advanced data manipulation########
+library(MASS)
+data(UScereal)
+head(UScereal)
+dim(UScereal)
+names(UScereal)
+str(UScereal)
+summary(UScereal)
+# attach(UScereal)
+# detach(UScereal)
+
+##########################################
+###################변수 설명################
+##########################################
+# mfr=manufacturer
+# calories= number of calories in one protion
+# protein=grams of protein in one portion
+# fat=frams of fat in one portion
+# sodium=miligrams of sodium in one portion
+# fibre=grams of dietary fibre in one portion
+# carbo=grams of complex carbohydrates in one portion
+# sugars=grams of sugars in one portion
+# shelf=display shelf(1,2, or 3, counting )
+# potassium=grams of potassium
+# vitamins=vitamins and minerals(none, enriched, or 100%)
+
+UScerealCPrS<-UScereal[,c(2,3,5,8)]
+plot(UScerealCPrS)
+cor(UScereal)
+
+# 조건에 맞는 데이터 추출하기
+UScerealmfrG<-UScereal[UScereal$mfr=="G",]
+UScerealmfrG.1<-UScereal[UScereal$mfr=="G",c(1,3,7)]
+UScerealmfrGKP<-UScereal[UScereal$mfr%in%c("G","K","P"),]
+
+UScerealGHsugar<-UScereal[with(UScereal, mfr=="G"& sugars>mean(sugars)),]
+UScereal[with(UScereal, mfr=="P"& calories>mean(calories)),]
+Gsodi<-UScereal[with(UScereal, mfr=="G"& sodium>mean(sodium)),]
+
+sugars.10<-subset(UScereal,sugars>10)
+HsugarsLcalories<-subset(UScereal,sugars>10&calories<120)
+HsugarsLcalories.1<-subset(UScereal,sugars>10&calories<120,select=c(sugars,calories))
+HsugarsLcalories.2<-subset(UScereal,sugars>10&calories<120,select=mfr:protein)
+
+# 실습-범주별로 데이터를 나누어 다른 이름으로 저장하기
+# http://www.statmethods.net/graphs/bar.html
+# 범주형 데이터로 변환 시키기 그리고 bar plot그리기
+UScereal$sugars1[UScereal$sugars>=mean(UScereal$sugars)]="high"
+UScereal$sugars1[UScereal$sugars<mean(UScereal$sugars)]="low"
+UScereal$sugars1
+
+# bar plot(막대 그래프) 만들기
+counts<-UScereal$sugars1
+table(counts)
+# barplot
+barplot(table(counts), main="sugars Distribution", xlab="Amount of Suagrs")
+# boxplot
+boxplot(sugars~sugars1,data=UScereal, main="",xlab="", ylab="")
+
+### 실습 ###
+
+
+# 실습
+# medical data를 이용
+# 1. BMI가 평균 이상 & chol이 평균 이상인 데이터만 추출
+# 2. age가 평균보다 크면 Hage 같거나 작으면 Lage로 범주형 정보가 담긴 변수 만들어 데이터 셋에 삽입하기(새로운 변수의 이름은 age1)
+# 3. age1값을 barplot과 boxplot으로 그리고 해석하기.
+# 4. age==Hage, BMI>=평균 BMI, chol>=평균 chol인 데이터셋 추출하기
+# 5. age==Lage, BMI>=평균 BMI, chol>=평균 chol인 데이터셋 추출하기
+# 6. 4와 5 summary비교하기
+# 7. age를 세구간으로 범주화 시키기, 35미만, 35이상 50미만, 50이상, 새로운 변수 이름은 age2로 한다.
+# 8. 7에 따른 세개의 데이터셋 만들고 각각의 summary값으로 비교하기.
+
+# age1, age2를 factor로 변환. factor-레벨의 차이, 다름, 크고 작음 아님.
+
+# advanced barplot and boxplot
+# Simple Horizontal Bar Plot with Added Labels 
+counts <- table(data$age2)
+barplot(counts, main="", horiz=TRUE,
+  names.arg=c("young age", "mid age", "old age"))    
+
+# Stacked Bar Plot with Colors and Legend
+counts <- table(data$age1, data$age2)
+barplot(counts, main="",
+  xlab="", col=c("darkblue","red"),
+ 	legend = rownames(counts))
+  
+# Grouped Bar Plot
+counts <- table(data$age1, data$age2)
+barplot(counts, main="",
+  xlab="", col=c("darkblue","red"),
+ 	legend = rownames(counts), beside=TRUE)
+  
+#install.packsges(ggplot2)
+#library(ggplot2) 
+#data(diamonds)
+#diamonds$price1[diamonds$price<500]="low"
+#diamonds$price1[diamonds$price>=500&diamonds$price<2000]="middle"
+#diamonds$price1[diamonds$price>=2000&diamonds$price<5000]="high"
+#diamonds$price1[diamonds$price>=5000]="very high"
+# table(diamonds$price1)
+# boxplot(carat~price1, outline=FALSE, data=diamonds)
+
+# 이름 순서대로 바꾸려면 한 가지 명령어가 더 들어가야 합니다. 
+diamonds$price1=factor(diamonds$price1, levels=c("low","middle","high","very high"))
+boxplot(carat~price1, outline=FALSE, data=diamonds)
+
+
+ 
+#############다이어트와 관련된 영양소를 찾아보자###############
+#### 1) calories
+#### 2) protein
+#### 3) sugars
+#### 4) fibre
+
+# 1) calories
+mean(calories)
+min(calories)
+max(calories)
+summary(calories)
+
+# 2) protein
+# 3) sugars
+# 4) fibre
+
+# histogram
+hist(calories)
+hist(calories)$counts
+hist(calories,breaks=30, main="Calories",col="red")
+# http://stackoverflow.com/questions/9317948/how-to-label-histogram-bars-with-data-values-or-percents-in-r
+
+#### 실습 ###
+# medical data 이용
+# 관심 있는 변수 2개 선택, histogram그리기 
+
+
+########## 여러개의 그래프를 한 페이지에#############
+par(mfrow=c(1,3))
+hist(calories,breaks=30,, main="Calories",col="red")
+hist(fat,breaks=30, main="Fat",col="red")
+hist(sugars,breaks=30, main="Sugars",col="red")
+
+### 실습 ###
+# 위에 그린 두개의 그래프 히스토 그램 한 페이지에 그리기 
+
+
+############# Scatter Plot 산점도 ##############
+
+plot(calories,fat)
+text(calories,fat,labels=row.names(UScereal),pos=4, cex=0.6, col="blue")
+
+plot(calories,sugars)
+text(calories,sugars,labels=row.names(UScereal),pos=4, cex=0.6, col="red")
+
+plot(sugars,fat)
+text(sugars,fat,labels=row.names(UScereal),pos=4, cex=0.6, col="black")
+
+# Brand Name  
+plot(calories,fat,main="Nutrition",xlab="Calories", ylab="Fat")
+text(calories,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+plot(calories,sugars,main="Nutrition",xlab="Calories", ylab="Sugars")
+text(calories,sugars,labels=mfr,pos=4, cex=0.6, col="red")
+
+plot(sugars,fat,main="Nutrition",xlab="Sugars", ylab="Fat")
+text(sugars,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+par(mfrow=c(1,3))
+plot(calories,fat,main="Nutrition",xlab="Calories", ylab="Fat")
+text(calories,fat,labels=mfr,pos=4, cex=0.6, col="red")
+plot(calories,sugars,main="Nutrition",xlab="Calories", ylab="Sugars")
+text(calories,sugars,labels=mfr,pos=4, cex=0.6, col="red")
+plot(sugars,fat,main="Nutrition",xlab="Sugars", ylab="Fat")
+text(sugars,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+# ? 
+unclass(mfr)
+
+# 제조사 별로 색 구분
+plot(calories,fat, pch=21,main="Nutrition",xlab="Calories", ylab="fat",bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+text(calories,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+plot(calories,sugars, pch=21, main="Nutrition",xlab="Calories", ylab="sugars",bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+text(calories,sugars,labels=mfr,pos=4, cex=0.6, col="red")
+
+plot(sugars,fat, pch=21, main="Nutrition",xlab="sugars", ylab="fat",bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+text(sugars,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+# ploting with different shape
+plot(calories,fat,pch=c(21,22,23,24,25,26)[unclass(mfr)],main="Nutrition",xlab="Calories", ylab="fat",bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+text(calories,fat,labels=mfr,pos=4, cex=0.6, col="red")
+
+
+# arrange three graphs in one page
+par(mfrow=c(1,2))  
+plot(calories,fat,main="Nutrition",xlab="Calories", ylab="Fat")
+text(calories,fat,labels=mfr,pos=4, cex=0.6, col="red")
+plot(calories,fat,main="Nutrition",xlab="Calories", ylab="Fat", pch=21, bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+
+par(mfrow=c(1,2))  
+plot(calories,sugars,main="Nutrition",xlab="Calories", ylab="Sugars")
+text(calories,sugars,labels=mfr,pos=4, cex=0.6, col="red")
+plot(calories,sugars,main="Nutrition",xlab="Calories", ylab="Sugars", pch=21, bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+
+par(mfrow=c(1,2))  
+plot(sugars,fat,main="Nutrition",xlab="Sugars", ylab="Fat")
+text(sugars,fat,labels=mfr,pos=4, cex=0.6, col="red")
+plot(sugars,fat,main="Nutrition",xlab="Sugars", ylab="Fat", pch=21, bg=c("red","yellow","green","blue","black","pink")[unclass(mfr)])
+
+# Calories, Sugars, Fat 서로 상관 관계가 있는듯 보인다. 좀 더 정확히 확인해봅시다. 
+
+# Correlation Graph
+pairs(~calories+fat+sugars,data=UScereal, main="Simple Scatterplot Matrix")
+plot(~calories+fat+sugars,data=UScereal, main="Simple Scatterplot Matrix")
+
+
+# Practice - 데이터 분석 로직(산점도, 군집 나누기, 그룹별 트랜드)
+hsb2 <- read.table('https://stats.idre.ucla.edu/wp-content/uploads/2016/02/hsb2-2.csv', header=T, sep=",")
+dim()
+summary()
+head()
+attach()
+
+# 산점도
+plot(read, write)
+cor(read, write)
+
+# pch for plotting characters, or symbol to use
+# see help(points) for more information on pch
+
+hsb2_female<-hsb2[female==1,]
+hsb2_male<-hsb2[female==0,]
+with(hsb2_female, plot(math, write, pch=20, col="darkred"))
+with(hsb2_male, points(math, write, pch=20, col="darkblue"))
+
+# alternatively 
+math_male<-hsb2$math[female==0]
+write_male<-hsb2$write[female==0]
+math_female<-hsb2$math[female==1]
+write_female<-hsb2$write[female==1]
+
+plot(math_female, write_female, type="p", pch=20, col="darkred")
+points(math_male, write_male, pch=22, col="darkblue")
+
+
+
+# race 별로 점을 찍어 봅시다.
+# race == 1
+# race == 2
+# race == 3
+# race == 4 
+hsb2_r1<-hsb2[race==1,]
+hsb2_r2<-hsb2[race==2,]
+hsb2_r3<-hsb2[race==3,]
+hsb2_r4<-hsb2[race==4,]
+with(hsb2_r1, plot(math, write, pch=20, col="darkred"))
+with(hsb2_r2, points(math, write, pch=20, col="darkblue"))
+with(hsb2_r3, points(math, write, pch=20, col="green"))
+with(hsb2_r4, points(math, write, pch=20, col="pink"))
+
+### 실습 ###
+# 1. math와 write의 산점도를 그리고 ses 별로 색깔을 달리하여 점을 찍어 봅시다.
+# 2. BMI와 chol의 산점도를 그리고 medical 데이터를 이용 age2를 이용 세개의 나이 그룹 따라 각각의 점에 색을 칠해 봅시다. 
+# 3. BMI나 chol이외에 다른 두 변수를 이용하여 age별로 명확한 그룹핑이 되는지 찾아봅시다. 
+
+
+# adding legend 
+hsb2_female<-hsb2[female==1,]
+hsb2_male<-hsb2[female==0,]
+with(hsb2_female, plot(math, write, pch=20, 
+                       col="darkred", ylim=c(25, 70)))
+with(hsb2_male, points(math, write, pch=22, 
+                       col="darkblue"))
+legend(65, 35, c("female", "male"), pch=c(20, 22), 
+       cex=.8, col=c("darkred", "darkblue"))
+
+
+# adding abline
+hsb2_female<-hsb2[female==1,]
+hsb2_male<-hsb2[female==0,]
+with(hsb2_female, plot(math, write, pch=20,col="darkred", ylim=c(25, 70)))
+with(hsb2_male, points(math, write, pch=22,col="darkblue"))
+with(hsb2_female,abline(lsfit(write, math), col="darkred"))
+with(hsb2_male,abline(lsfit(write, math), col="darkblue"))
+legend(65, 35, c("female", "male"), pch=c(20, 22),cex=.8, col=c("darkred", "darkblue"))
+
+
+# race의 math와 write의 산점도, 추세선, 레전드 그려보기
+hsb2_r1<-hsb2[race==1,]
+hsb2_r2<-hsb2[race==2,]
+hsb2_r3<-hsb2[race==3,]
+hsb2_r4<-hsb2[race==4,]
+with(hsb2_r1, plot(math, write, pch=20, col="darkred"))
+with(hsb2_r2, points(math, write, pch=20, col="darkblue"))
+with(hsb2_r3, points(math, write, pch=20, col="green"))
+with(hsb2_r4, points(math, write, pch=20, col="pink"))
+
+
+# 3D Scatterplot
+library(MASS)
+data(mtcars)
+
+install.packages("plotly")
+library(plotly)
+packageVersion('plotly')
+
+mtcars$am[which(mtcars$am == 0)] <- 'Automatic'
+mtcars$am[which(mtcars$am == 1)] <- 'Manual'
+mtcars$am <- as.factor(mtcars$am)
+
+p <- plot_ly(mtcars, x = ~wt, y = ~hp, z = ~qsec, color = ~am, colors = c('#BF382A', '#0C4B8E')) %>%
+  add_markers() %>%
+  layout(scene = list(xaxis = list(title = 'Weight'),
+                      yaxis = list(title = 'Gross horsepower'),
+                      zaxis = list(title = '1/4 mile time')))
+
+
+### 실습 ###
+# medical data 이용
+# 조건 age1(Hage,Lage) 이용하여 BMI와 chol, insulin의 관계 3D로 표현하기
+# hsb2 data 이용
+# 수학 성적을 두개의 범주형 데이터로 나누고 나머지 점수들 중 세가지를 선택하여 3D로 
+
+# 분포 
+# Histogram
+# 정규 분포의 성질 이해하기
+# 정규 분포를 따를때 예측 가능한 것들
+u <- rnorm(1000)
+#default histogram
+hist(u)
+
+#with shading
+hist(u, density=20)
+
+#with specific number of bins
+hist(u, density=20, breaks=20)
+
+# proportion, instead of frequency
+# also specifying y-axis
+hist(u, density=20, breaks=-3:3, 
+     ylim=c(0,.5), prob=TRUE)
+
+hist(u, density=20, prob=TRUE)
+
+# density plot
+
+
+# overlay normal curve with x-lab and ylim
+# colored normal curve
+m<-mean(u)
+std<-sqrt(var(u))
+hist(u, density=20, breaks=20, prob=TRUE, 
+     xlab="x-variable", ylim=c(0, 0.7), 
+     main="normal curve over histogram")
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE)
+
+hist(u, density=20, breaks=20, prob=TRUE, 
+     xlab="x-variable", ylim=c(0, 0.8),
+     main="Density curve over histogram") 
+lines(density(u), col = "blue")
+
+# hist(u) is an object
+# names(uh) will show all of its components
+uh<-hist(u)
+plot(uh, ylim=c(0, 40), col="lightgray", 
+     xlab="", main="Histogram of u")
+text(uh$mids, uh$counts+2, label=c(uh$counts))
+
+
+# probability 예측해봅시다
+# study normal distribution & Central Limit Theorem
+
+# calculate probability
+1-pnorm(330,m=280,sd=40)
+
+# 누적분포함수 값 p에 해당하는 분위수 q 를 알고 싶을 때
+qnorm(p=0.8413447, mean=0, sd=1)
+
+
+
+
+# Create a shareable link to your chart
+# Set up API credentials: https://plot.ly/r/getting-started
+chart_link = plotly_POST(p, filename="scatter3d/basic")
+chart_link
+
+
+###### 잘나가는 패키지 찾기
+####### http://awesome42.com/
+# X <- c(rep(65, times=5), rep(25, times=5), rep(35, times=10), rep(45, times=4))
+# hist(X, prob=TRUE, col="grey")# prob=TRUE for probabilities not counts
+# lines(density(X), col="blue", lwd=2) # add a density estimate with defaults
+# lines(density(X, adjust=2), lty="dotted", col="darkgreen", lwd=2)
+
+
+# density curve
+d <- density(mpg) # returns the density data 
+plot(d)
+plot(d,xlab="Miles Per Gallon",main="Density Of MPG")
+#polygon(d, col="red", border="blue")
+polygon(d, col="blue", border="red")
+
+# Next Step
+# dplyr
+# ggplot
+
+
+
+
+
