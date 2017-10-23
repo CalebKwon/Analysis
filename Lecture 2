@@ -23,24 +23,22 @@ hist(u, density=20, breaks=20)
 
 # proportion, instead of frequency
 # also specifying y-axis
-hist(u, density=20, breaks=-3:3, 
-     ylim=c(0,.5), prob=TRUE)
-
+hist(u, density=20, breaks=40,ylim=c(0,.5), prob=TRUE)
 hist(u, density=20, prob=TRUE)
 
 # density plot
-
-
 # overlay normal curve with x-lab and ylim
 # colored normal curve
 m<-mean(u)
 std<-sqrt(var(u))
 hist(u, density=20, breaks=20, prob=TRUE, 
      xlab="x-variable", ylim=c(0, 0.7), 
-     main="normal curve over histogram")
+     main="normal curve over histogram") # y 높이 조절 해야함
 curve(dnorm(x, mean=m, sd=std), 
       col="darkblue", lwd=2, add=TRUE)
+# dnorm(값, mean=0, sd=1) : 값에 해당하는 정규분포의 높이를 알려준다.
 
+# density plot 덧붙이기
 hist(u, density=20, breaks=20, prob=TRUE, 
      xlab="x-variable", ylim=c(0, 0.8),
      main="Density curve over histogram") 
@@ -49,20 +47,29 @@ lines(density(u), col = "blue")
 # hist(u) is an object
 # names(uh) will show all of its components
 uh<-hist(u)
-plot(uh, ylim=c(0, 40), col="lightgray", 
+plot(uh, ylim=c(0, 200), col="lightgray", 
      xlab="", main="Histogram of u")
-text(uh$mids, uh$counts+2, label=c(uh$counts))
+text(uh$mids, uh$counts+2, label=c(uh$counts)) 
+# 1) 위치, 2) 숫자가 표기되는 위치, 3) labeling
+
+##### 실습 ##### 
+1) medical data에서 변수중 가장 정규 분포에 맞는 변수 3개를 뽑아 한 페이지에 정렬하시오. 
+2) hsb2데이터에서 변수중 가장 정규 분포에 맞는 변수 2개를 뽑아 한 페이지에 정렬하시오.
+# 검증을 위해 각 히스토그램과 정규 분포 그래프를 겹치도록 하여 주십시오.
 
 
-# probability 예측해봅시다
+
+############################
+### probability 예측해봅시다###
 # study normal distribution & Central Limit Theorem
+##############################
+# 이론 이해 - PPT
 
 # calculate probability
 1-pnorm(330,m=280,sd=40)
 
 # 누적분포함수 값 p에 해당하는 분위수 q 를 알고 싶을 때
 qnorm(p=0.8413447, mean=0, sd=1)
-
 
 # central limit theorem
 #### 어떤 모집단의 평균값을 알고 싶다. 
@@ -84,6 +91,8 @@ hist(xbar,prob=TRUE,breaks=12,xlim=c(70,130),ylim=c(0,0.1))
 ##############
 ### T-test ###
 ##############
+# 이론 이해 - PPT
+
 # The t Test With Two Independent Groups
 # marijuana smoking and a deficit in performance on a task measuring short term memory
 nonsmokers = c(18,22,21,17,20,17,23,20,22,21)
@@ -116,6 +125,12 @@ mj.data = data.frame(groups, scores)
 mj.data
 
 t.test(scores ~ groups)
+
+###################### 실습 #####################
+# hsb2 1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가?
+# medical data 1) age1 변수를 만든다. age<=45 group, age>46 group 
+#              2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가?
+
 
 # If the normality assumption of the t-test is violated, and the sample sizes are two small to heal,
 # then a nonparametric alternative test should be sought.
@@ -174,6 +189,11 @@ t.test(a,b, paired=TRUE, alt="less")
 # a가 b보다 큰가? 
 t.test (a, b, paired = TRUE, alt = "greater")
 
+###################### 실습 #####################
+# hsb2 1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가?-> 평균값이 다르다면 남성이 더 잘하는가 여성이 더 잘하는가? 
+# medical data 1) age1 변수를 만든다. age<=45 group, age>46 group 
+#              2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가? -> 평균값이 다르다면 젊은층이 수치가 높은가 아니면 낮은가?
+
 # One Sample t-test
 data = c(52.7, 53.9, 41.7, 71.5, 47.6, 55.1,
        62.2, 56.5, 33.4, 61.8, 54.3, 50.0, 
@@ -194,12 +214,6 @@ t.test(y1,y2,paired=TRUE) # where y1 & y2 are numeric
 
 # one sample t-test
 t.test(y,mu=3) # Ho: mu=3
-
-
-# practice
-hsb2 <- read.table('http://www.ats.ucla.edu/stat/r/modules/hsb2.csv', header=T, sep=",")
-
-# 성별과 각 점수가 연관이 있는가?
 
 #############
 ### ANOVA ###
@@ -242,9 +256,6 @@ detach(group_df)
 aov(y ~ group, data = group_df)
 summary(aov(y ~ group, data = group_df))
 
-
-
-
 ##################################
 data <- read.table(header=TRUE, text='
  subject sex   age before after
@@ -284,6 +295,11 @@ data$subject <- factor(data$subject)
 
 aov1 <- aov(before ~ sex, data=data)
 summary(aov1)
+
+# hsb2 1) SES나 race 에 따라 수학과 과학 점수가 다른가 같은가?  
+# medical data 1) age2 변수를 만든다. age<=30 group, 30<age<=46 group, 46<age 
+#              2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가? 
+
 
 
 aov2 <- aov(after ~ sex*age, data=data)
@@ -335,20 +351,3 @@ gender Vs. Math
 gender Vs. read
 race 1,2 vs. Math
 ses 1,2 vs. Math
-
-
-# Practice with data set
-# From plotting to analysis
-# medical data에서 age1 변수를 설정 이용 1) age>=mean(age)는 "highage",age<mean(age)는 "lowage"로 나눈다
-#                                    2) BMI 와 Chol을 plotting 하고 high age==blue color, low age==red color로 각 점에 색깔을 칠한다.  
-#                                    3) legend 덧붙이기
-#                                    4) 각 age에 맞게 추세선 그리기
-#                                    5) main, x축, y축 이름 넣기
-#                                    6) high age그룹과 low age 그룹의 BMI와 chol summary구하기, 두 그룹간 BMI와 chol의 평균이 같은지 구하기(t-test)
-#                                    7) high age그룹과 low age 그룹의 BMI와 chol 막대 그래프로 구하기 
-#                                    8) high age그룹과 low age 그룹의 BMI, 그리고 chol간의 관계 연관성 구하기.(BMI도 두 구간으로 chol도 두 구간으로 나눔)
-
-
-
-
-
