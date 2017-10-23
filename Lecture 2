@@ -5,3 +5,350 @@
 # Chi-Square test
 # Simple Linear Model
 
+################
+### 정규 분포 ###
+################
+
+# 정규 분포의 성질 이해하기
+# 정규 분포를 따를때 예측 가능한 것들
+u <- rnorm(1000)
+#default histogram
+hist(u)
+
+#with shading
+hist(u, density=20)
+
+#with specific number of bins
+hist(u, density=20, breaks=20)
+
+# proportion, instead of frequency
+# also specifying y-axis
+hist(u, density=20, breaks=-3:3, 
+     ylim=c(0,.5), prob=TRUE)
+
+hist(u, density=20, prob=TRUE)
+
+# density plot
+
+
+# overlay normal curve with x-lab and ylim
+# colored normal curve
+m<-mean(u)
+std<-sqrt(var(u))
+hist(u, density=20, breaks=20, prob=TRUE, 
+     xlab="x-variable", ylim=c(0, 0.7), 
+     main="normal curve over histogram")
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE)
+
+hist(u, density=20, breaks=20, prob=TRUE, 
+     xlab="x-variable", ylim=c(0, 0.8),
+     main="Density curve over histogram") 
+lines(density(u), col = "blue")
+
+# hist(u) is an object
+# names(uh) will show all of its components
+uh<-hist(u)
+plot(uh, ylim=c(0, 40), col="lightgray", 
+     xlab="", main="Histogram of u")
+text(uh$mids, uh$counts+2, label=c(uh$counts))
+
+
+# probability 예측해봅시다
+# study normal distribution & Central Limit Theorem
+
+# calculate probability
+1-pnorm(330,m=280,sd=40)
+
+# 누적분포함수 값 p에 해당하는 분위수 q 를 알고 싶을 때
+qnorm(p=0.8413447, mean=0, sd=1)
+
+
+# central limit theorem
+#### 어떤 모집단의 평균값을 알고 싶다. 
+# http://msemac.redwoods.edu/~darnold/math15/UsingRInStatistics/CentralLimit.php
+x=rnorm(10000,mean=100,sd=10)
+hist(x,prob=TRUE)
+x=rnorm(500,mean=100,sd=10)
+hist(x,prob=TRUE,ylim=c(0,0.04))
+curve(dnorm(x,mean=100,sd=10),70,130,add=TRUE,lwd=2,col="red")
+
+############## distribution of mean##############
+mu=100; sigma=10
+n=5
+
+xbar=rep(0,500)
+for (i in 1:500) { xbar[i]=mean(rnorm(n,mean=mu,sd=sigma)) }
+hist(xbar,prob=TRUE,breaks=12,xlim=c(70,130),ylim=c(0,0.1))
+
+##############
+### T-test ###
+##############
+# The t Test With Two Independent Groups
+# marijuana smoking and a deficit in performance on a task measuring short term memory
+nonsmokers = c(18,22,21,17,20,17,23,20,22,21)
+smokers = c(16,20,14,21,20,18,13,15,17,21)
+
+
+par(mfrow=c(1,2))               # set graphics window to plot side by side
+plot(density(nonsmokers), main="nonsmokers")
+plot(density(smokers), main="smokers")
+
+boxplot(nonsmokers, smokers, ylab="Scores on Digit Span Task",      # plot and label y-axis
+         names=c("nonsmokers","smokers"),                           # group names on x-axis
+         main="Digit Span Performance by\n Smoking Status")         # main title
+
+mean(nonsmokers)
+sd(nonsmokers)
+
+mean(smokers)
+sd(smokers)
+
+# T-test
+t.test(nonsmokers, smokers)
+# By default the two-tailed test is done.
+
+# different data format
+scores = c(nonsmokers, smokers)
+groups = c("nonsmokers","smokers")        # Make sure these are in the right order!
+groups = rep(groups, times=c(10,10))      # 10 nonsmokers, 10 smokers
+mj.data = data.frame(groups, scores)
+mj.data
+
+t.test(scores ~ groups)
+
+# If the normality assumption of the t-test is violated, and the sample sizes are two small to heal,
+# then a nonparametric alternative test should be sought.
+
+# 
+wilcox.test(nonsmokers, smokers)
+
+#
+wilcox.test(scores ~ groups, data=mj.data)
+
+# t.test(x, y = NULL,
+#       alternative = c("two.sided", "less", "greater"),
+#       mu = 0, paired = FALSE, var.equal = FALSE,           
+#       conf.level = 0.95, ...)
+# 
+# var.equal : 등분산 가정 여부를 설정한다. 만약 TRUE 라면 합동분산(pooled variance)을 사용하며, 그렇지 않은 경우에는 Welch 또는 Satterthwaite을 사용한다.
+# paired : 
+# Paired sample t-test is a statistical technique that is used to compare two population means 
+# in the case of two samples that are correlated.  Paired sample t-test is used in ‘before-after’ studies, 
+# or when the samples are the matched pairs, or when it is a case-control study. 
+# A paired t-test can be more powerful than a 2-sample t-test because 
+# the latter includes additional variation occurring from the independence of the observations.
+# A paired t-test is not subject to this variation because the paired observations are dependent. 
+# Also, a paired t-test does not require both samples to have equal variance. 
+
+
+
+# before and after training for each athlete.
+# Before training: 12.9, 13.5, 12.8, 15.6, 17.2, 19.2, 12.6, 15.3, 14.4, 11.3
+# After training: 12.7, 13.6, 12.0, 15.2, 16.8, 20.0, 12.0, 15.9, 16.0, 11.1
+
+a = c(12.9, 13.5, 12.8, 15.6, 17.2, 19.2, 12.6, 15.3, 14.4, 11.3)
+b = c(12.7, 13.6, 12.0, 15.2, 16.8, 20.0, 12.0, 15.9, 16.0, 11.1)
+
+
+# if the means of times have remained substantially the same (hypothesis H0)
+# In this case we have two sets of paired samples, since the measurements were made on the same athletes before and after the workout
+t.test(a,b, paired=TRUE)   # 다르다. 향상, 퇴보 둘 다 OK
+
+# The p-value is greater than 0.05, then we can accept the hypothesis H0 of equality of the averages.
+
+
+# New training 
+a = c(12.9, 13.5, 12.8, 15.6, 17.2, 19.2, 12.6, 15.3, 14.4, 11.3)
+b = c(12.0, 12.2, 11.2, 13.0, 15.0, 15.8, 12.2, 13.4, 12.9, 11.0)
+
+
+# Now we check if there was actually an improvement, ie perform a t-test for paired data, 
+# specifying in R to test the alternative hypothesis H1 of improvement in times. 
+# To do this simply add the syntax alt = "less" when you call the t-test:
+# 줄어 들었냐?
+
+# a가 b보다 작은가? 
+t.test(a,b, paired=TRUE, alt="less") 
+
+# a가 b보다 큰가? 
+t.test (a, b, paired = TRUE, alt = "greater")
+
+# One Sample t-test
+data = c(52.7, 53.9, 41.7, 71.5, 47.6, 55.1,
+       62.2, 56.5, 33.4, 61.8, 54.3, 50.0, 
+       45.3, 63.4, 53.9, 65.5, 66.6, 70.0,
+       52.4, 38.6, 46.1, 44.4, 60.7, 56.4)
+t.test(data, mu=50, alternative = 'greater')
+
+
+# 다양한 T-test 방법 정리 
+# independent 2-group t-test
+# t.test(y~x) # where y is numeric and x is a binary factor
+
+# independent 2-group t-test
+t.test(y1,y2) # where y1 and y2 are numeric
+
+# paired t-test
+t.test(y1,y2,paired=TRUE) # where y1 & y2 are numeric
+
+# one sample t-test
+t.test(y,mu=3) # Ho: mu=3
+
+
+# practice
+hsb2 <- read.table('http://www.ats.ucla.edu/stat/r/modules/hsb2.csv', header=T, sep=",")
+
+# 성별과 각 점수가 연관이 있는가?
+
+#############
+### ANOVA ###
+#############
+# daily outcome by tmep condition (group 1/2/3)
+# group 1 : temperature condition 1 
+# group 2 : temperature condition 2
+# group 3 : temperature condition 3
+
+y1 <- c(50.5, 52.1, 51.9, 52.4, 50.6, 51.4, 51.2, 52.2, 51.5, 50.8)
+y2 <- c(47.5, 47.7, 46.6, 47.1, 47.2, 47.8, 45.2, 47.4, 45.0, 47.9)
+y3 <- c(46.0, 47.1, 45.6, 47.1, 47.2, 46.4, 45.9, 47.1, 44.9, 46.2)
+
+y <- c(y1, y2, y3)
+
+n <- rep(10, 3)
+group <- rep(1:3, n)
+group
+
+group_df <- data.frame(y, group)
+group_df
+
+> # transform from 'integer' to 'factor'
+group_df <- transform(group_df, group = factor(group))
+sapply(group_df, class)
+
+# boxplot
+attach(group_df)
+
+boxplot(y ~ group, 
+         main = "Boxplot of Daily Outcome by Temperature condition 1/2/3", 
+         xlab = "Factor Levels : Temperature condition 1/2/3", 
+         ylab = "Daily Outcome")
+         
+tapply(y, group, summary)
+
+detach(group_df)
+
+# one-wayANOVA
+aov(y ~ group, data = group_df)
+summary(aov(y ~ group, data = group_df))
+
+
+
+
+##################################
+data <- read.table(header=TRUE, text='
+ subject sex   age before after
+       1   F   old    9.5   7.1
+       2   M   old   10.3  11.0
+       3   M   old    7.5   5.8
+       4   F   old   12.4   8.8
+       5   M   old   10.2   8.6
+       6   M   old   11.0   8.0
+       7   M young    9.1   3.0
+       8   F young    7.9   5.2
+       9   F   old    6.6   3.4
+      10   M young    7.7   4.0
+      11   M young    9.4   5.3
+      12   M   old   11.6  11.3
+      13   M young    9.9   4.6
+      14   F young    8.6   6.4
+      15   F young   14.3  13.5
+      16   F   old    9.2   4.7
+      17   M young    9.8   5.1
+      18   F   old    9.9   7.3
+      19   F young   13.0   9.5
+      20   M young   10.2   5.4
+      21   M young    9.0   3.7
+      22   F young    7.9   6.2
+      23   M   old   10.1  10.0
+      24   M young    9.0   1.7
+      25   M young    8.6   2.9
+      26   M young    9.4   3.2
+      27   M young    9.7   4.7
+      28   M young    9.3   4.9
+      29   F young   10.7   9.8
+      30   M   old    9.3   9.4
+')
+
+data$subject <- factor(data$subject)
+
+aov1 <- aov(before ~ sex, data=data)
+summary(aov1)
+
+
+aov2 <- aov(after ~ sex*age, data=data)
+# aov2 <- aov(after ~ sex + age + sex:age, data=data)
+summary(aov2)
+
+hsb2 <- read.table('http://www.ats.ucla.edu/stat/r/modules/hsb2.csv', header=T, sep=",")
+# SES나 race에 따라 각 과목별 성적이 같다 해야 하는가?
+
+
+#######################
+### chi-square Test####
+#######################
+# http://www.r-tutor.com/elementary-statistics/goodness-fit/chi-squared-test-independence
+# https://www.r-bloggers.com/chi-squared-test/
+# http://bhpark.tistory.com/53
+# http://blog.daum.net/_blog/BlogTypeView.do?blogid=09slZ&articleno=16495315
+
+
+  library(MASS)       # load the MASS package 
+  tbl = table(survey$Smoke, survey$Exer) 
+  tbl                 # the contingency table 
+ 
+#        Freq None Some 
+#  Heavy    7    1    3 
+#  Never   87   18   84 
+#  Occas   12    3    4 
+#  Regul    9    1    7
+
+
+chisq.test(tbl) 
+ 
+#        Pearson’s Chi-squared test 
+ 
+# data:  table(survey$Smoke, survey$Exer) 
+# X-squared = 5.4885, df = 6, p-value = 0.4828 
+
+# Smoke Vs. Sex
+# Sex Vs. Exer
+
+# 연속 변수를 명목 변수로 구하는 방법 기억 하시나요?
+
+# Medical Data
+BMI Vs. Chol
+Age Vs. BMI
+
+# hsb2
+gender Vs. Math
+gender Vs. read
+race 1,2 vs. Math
+ses 1,2 vs. Math
+
+
+# Practice with data set
+# From plotting to analysis
+# medical data에서 age1 변수를 설정 이용 1) age>=mean(age)는 "highage",age<mean(age)는 "lowage"로 나눈다
+#                                    2) BMI 와 Chol을 plotting 하고 high age==blue color, low age==red color로 각 점에 색깔을 칠한다.  
+#                                    3) legend 덧붙이기
+#                                    4) 각 age에 맞게 추세선 그리기
+#                                    5) main, x축, y축 이름 넣기
+#                                    6) high age그룹과 low age 그룹의 BMI와 chol summary구하기, 두 그룹간 BMI와 chol의 평균이 같은지 구하기(t-test)
+#                                    7) high age그룹과 low age 그룹의 BMI와 chol 막대 그래프로 구하기 
+#                                    8) high age그룹과 low age 그룹의 BMI, 그리고 chol간의 관계 연관성 구하기.(BMI도 두 구간으로 chol도 두 구간으로 나눔)
+
+
+
+
+
