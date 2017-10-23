@@ -9,6 +9,10 @@ names(mpg)
 # hwy - a car’s fuel efficiency on the highway in miles per gallon (mpg). 
 #  A car with a low fuel efficiency consumes more fuel than a car with a high fuel efficiency when they travel the same distance.
 
+### 실습을 위해서 ###
+# medical data에서 BMI에 따라 3등급으로 나눈 변수를 만든다. 변수 이름은 BMI1
+# medical data에서 age에 따라 3등급으로 나눈 변수를 만든다. 변수 이름은 age1
+
 # The plot shows a negative relationship between engine size (displ) and fuel efficiency (hwy).
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
@@ -75,8 +79,24 @@ ggplot(mapping = aes(x = displ, y = hwy)) +
   geom_point(data = mpg) + 
   geom_smooth(data = mpg)
 
-data(diamonds)
-diamonds
+# 
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~ class)
+
+#
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+#
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+ # facet_grid(cyl ~ .)
+   facet_grid(. ~ cyl)
+
+
+# data(diamonds)
 
 #  information about 53,940 diamonds
 ggplot(data = diamonds) + 
@@ -99,7 +119,7 @@ ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge") +
   ggtitle('Position = "dodge"')
   
-#Polar bar charts will look better if you also set the width parameter of geom_bar() to 1
+# Polar bar charts will look better if you also set the width parameter of geom_bar() to 1
 # width parameter of geom_bar() to 1. This will ensure that no space appears between the bars.
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = cut), width = 1) + 
@@ -115,116 +135,6 @@ ggplot(data = diamonds) +
 geom_bar(mapping = aes(x = cut, fill = cut), width = 1) + 
 coord_polar() + 
 facet_wrap( ~ clarity)
-
-# 
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_wrap(~ class)
-
-#
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(drv ~ .)
-
-#
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
- # facet_grid(cyl ~ .)
-   facet_grid(. ~ cyl)
-
-
-# histogram
-# http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html
-# http://r4ds.had.co.nz/data-visualisation.html
-
-# http://had.co.nz/ggplot2
-
-# qplot examples -------------------------------------------------------------
-
-qplot(diamonds$cut, diamonds$carat)
-qplot(carat, price, data = diamonds)
-qplot(carat, price, data = diamonds, colour=clarity)
-qplot(carat, price, data = diamonds, geom=c("point", "smooth"), method=lm)
-
-qplot(carat, data = diamonds, geom="histogram")
-qplot(carat, data = diamonds, geom="histogram", binwidth = 1)
-qplot(carat, data = diamonds, geom="histogram", binwidth = 0.1)
-qplot(carat, data = diamonds, geom="histogram", binwidth = 0.01)
-
-#
-ggplot(data = diamonds) +
-  geom_bar(mapping = aes(x = cut))
-
-# 
-ggplot(data = diamonds) +
-  geom_bar(mapping = aes(x = cut), width = 1)
-
-#
-table(diamonds$cut)
-
-# geom_histogram() will divide the range of the variable into 30 equal length bins.
-ggplot(data = diamonds) +
-  geom_histogram(aes(x = carat))
-
-# 
-ggplot(data = diamonds) +
-  geom_histogram(aes(x = carat), binwidth = 1)
-
-#
-ggplot(data = diamonds) +
-  geom_histogram(aes(x = carat), binwidth = 0.01)
-
-#	•	binwidth - the width to use for the bins in the same units as the x variable
-#	•	origin - origin of the first bin interval
-#	•	right - if TRUE bins will be right closed (e.g. points that fall on the border of two bins will be counted with the bin to the left)
-#	•	breaks - a vector of actual bin breaks to use. If you set the breaks argument, it will override the binwidth and origin arguments.
-
-#
-ggplot(data = diamonds) +
-  geom_freqpoly(aes(x = carat))
-
-ggplot(data = diamonds) +
-  geom_histogram(aes(x = carat))
-
-ggplot(data = diamonds) +
-  geom_freqpoly(aes(x = carat, color = cut))
-
-ggplot(data = diamonds) +
-  geom_histogram(aes(x = carat, fill = cut))
-
-ggplot(data = diamonds) +
-  geom_area(aes(x = carat, fill = cut), stat = "bin", position = "stack")
-
-ggplot(data = diamonds) +
-  geom_density(aes(x = carat))
-
-# You can control the smoothness of the density with adjust, and 
-# you can select the kernel to use to estimate the density with kernel
-ggplot(data = diamonds) +
-  geom_density(aes(x = carat, color = cut), kernel = "gaussian", adjust = 4)
-
-
-# using ggplot() -------------------------------------------------------------
-d <- ggplot(diamonds, aes(x=carat, y=price))
-d + geom_point()
-d + geom_point(aes(colour = carat))
-d + geom_point(aes(colour = carat)) + scale_colour_brewer()
-
-ggplot(diamonds) + geom_histogram(aes(x=price))
-
-# Separation of statistcs and geometric elements -----------------------------
-
-p <- ggplot(diamonds, aes(x=price))
-
-p + geom_histogram()
-p + stat_bin(geom="area")
-p + stat_bin(geom="point")
-p + stat_bin(geom="line")
-
-p + geom_histogram(aes(fill = clarity))
-p + geom_histogram(aes(y = ..density..))
-
-
 
 # Changing the Default Order of Legend Labels and Stacking of Data
 # https://learnr.wordpress.com/2010/03/23/ggplot2-changing-the-default-order-of-legend-labels-and-stacking-of-data/
@@ -251,6 +161,48 @@ ggplot(diamonds, aes(clarity, fill = cut, order = -as.numeric(cut))) +
 
 # new - ggplot2 2.2.0
 # https://www.r-bloggers.com/ggplot2-2-2-0/
+
+
+# joyplot
+library(ggjoy)
+library(gridExtra)
+data(iris)
+View(iris)
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + geom_joy()
+
+# scale = 0.9, not quite touching
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + geom_joy(scale = 0.9)
+
+# scale = 1, exactly touching
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + geom_joy(scale = 1)
+
+# scale = 5, substantial overlap
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + geom_joy(scale = 5)
+
+#
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + 
+  geom_joy(scale = 1) + facet_wrap(~Species)
+
+#
+ggplot(iris, aes(x = Sepal.Length, y = Species)) + 
+  geom_joy() + theme_joy(grid = FALSE) +
+  scale_x_continuous(expand = c(0.01, 0)) +
+  scale_y_discrete(expand = c(0.01, 0))
+  
+#
+ ggplot(diamonds, aes(x = price, y = cut, fill = cut)) + 
+   geom_joy(scale = 4) + 
+   scale_fill_cyclical(values = c("blue", "green"))
+   
+#
+ggplot(diamonds, aes(x = price, y = cut, fill = cut)) + 
+   geom_joy(scale = 4) + 
+   scale_fill_cyclical(values = c("blue", "green"), guide = "legend")
+
+# medical data에서 BMI에 따라 3등급으로 나눈 변수를 만든다. 변수 이름은 BMI1
+# medical data에서 age에 따라 3등급으로 나눈 변수를 만든다. 변수 이름은 age1
+
+
 
 #########################################################################
 # http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/
