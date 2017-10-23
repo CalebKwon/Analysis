@@ -473,6 +473,20 @@ with(hsb2_r3, points(math, write, pch=20, col="green"))
 with(hsb2_r4, points(math, write, pch=20, col="pink"))
 
 
+# Practice with data set
+# From plotting to analysis
+# medical data에서 age1 변수를 설정 이용 1) age>=mean(age)는 "highage",age<mean(age)는 "lowage"로 나눈다
+#                                    2) BMI 와 Chol을 plotting 하고 high age==blue color, low age==red color로 각 점에 색깔을 칠한다.  
+#                                    3) legend 덧붙이기
+#                                    4) 각 age에 맞게 추세선 그리기
+#                                    5) main, x축, y축 이름 넣기
+#                                    6) high age그룹과 low age 그룹의 BMI와 chol summary구하기, 두 그룹간 BMI와 chol의 평균이 같은지 구하기(t-test)
+#                                    7) high age그룹과 low age 그룹의 BMI와 chol 막대 그래프로 구하기 
+#                                    8) high age그룹과 low age 그룹의 BMI, 그리고 chol간의 관계 연관성 구하기.(BMI도 두 구간으로 chol도 두 구간으로 나눔)
+
+
+
+
 # 3D Scatterplot
 library(MASS)
 data(mtcars)
@@ -498,85 +512,6 @@ p <- plot_ly(mtcars, x = ~wt, y = ~hp, z = ~qsec, color = ~am, colors = c('#BF38
 # hsb2 data 이용
 # 수학 성적을 두개의 범주형 데이터로 나누고 나머지 점수들 중 세가지를 선택하여 3D로 
 
-# 분포 
-# Histogram
-# 정규 분포의 성질 이해하기
-# 정규 분포를 따를때 예측 가능한 것들
-u <- rnorm(1000)
-#default histogram
-hist(u)
-
-#with shading
-hist(u, density=20)
-
-#with specific number of bins
-hist(u, density=20, breaks=20)
-
-# proportion, instead of frequency
-# also specifying y-axis
-hist(u, density=20, breaks=-3:3, 
-     ylim=c(0,.5), prob=TRUE)
-
-hist(u, density=20, prob=TRUE)
-
-# density plot
-
-
-# overlay normal curve with x-lab and ylim
-# colored normal curve
-m<-mean(u)
-std<-sqrt(var(u))
-hist(u, density=20, breaks=20, prob=TRUE, 
-     xlab="x-variable", ylim=c(0, 0.7), 
-     main="normal curve over histogram")
-curve(dnorm(x, mean=m, sd=std), 
-      col="darkblue", lwd=2, add=TRUE)
-
-hist(u, density=20, breaks=20, prob=TRUE, 
-     xlab="x-variable", ylim=c(0, 0.8),
-     main="Density curve over histogram") 
-lines(density(u), col = "blue")
-
-# hist(u) is an object
-# names(uh) will show all of its components
-uh<-hist(u)
-plot(uh, ylim=c(0, 40), col="lightgray", 
-     xlab="", main="Histogram of u")
-text(uh$mids, uh$counts+2, label=c(uh$counts))
-
-
-# probability 예측해봅시다
-# study normal distribution & Central Limit Theorem
-
-# calculate probability
-1-pnorm(330,m=280,sd=40)
-
-# 누적분포함수 값 p에 해당하는 분위수 q 를 알고 싶을 때
-qnorm(p=0.8413447, mean=0, sd=1)
-
-
-
-
-# Create a shareable link to your chart
-# Set up API credentials: https://plot.ly/r/getting-started
-chart_link = plotly_POST(p, filename="scatter3d/basic")
-chart_link
-
-
-###### 잘나가는 패키지 찾기
-####### http://awesome42.com/
-# X <- c(rep(65, times=5), rep(25, times=5), rep(35, times=10), rep(45, times=4))
-# hist(X, prob=TRUE, col="grey")# prob=TRUE for probabilities not counts
-# lines(density(X), col="blue", lwd=2) # add a density estimate with defaults
-# lines(density(X, adjust=2), lty="dotted", col="darkgreen", lwd=2)
-
-
-# density curve
-d <- density(mpg) # returns the density data 
-plot(d)
-plot(d,xlab="Miles Per Gallon",main="Density Of MPG")
-#polygon(d, col="red", border="blue")
-polygon(d, col="blue", border="red")
 
 # Next Step
 # dplyr
