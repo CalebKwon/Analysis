@@ -217,6 +217,40 @@ nmmaps<-nmmaps[nmmaps$date>as.Date("1996-12-31"),]
 nmmaps$year<-substring(nmmaps$date,1,4)
 head(nmmaps)
 
+g<‐ggplot(nmmaps,aes(date,temp))+geom_point(color="firebrick")
+g
+
+# Add a title (ggtitle()orlabs())
+g<‐g+ggtitle('Temperature')
+g
+
+# Make title bold and add a little space at the baseline
+g+theme(plot.title=element_text(size=20,face="bold",vjust=2))
+
+# coloring code the plot based on season
+g<‐ggplot(nmmaps,aes(date,temp,color=factor(season)))+geom_point()
+g
+
+# 
+install.packages("ggthemes")
+library(ggthemes)
+ggplot(nmmaps,aes(date,temp,color=factor(season)))+
+geom_point()+ggtitle("Thisplotlooksalotdifferentfromthedefault")+
+theme_economist()+scale_colour_economist()
+
+# box plot
+g<‐ggplot(nmmaps,aes(x=season,y=o3))
+g+geom_boxplot(fill="darkseagreen4")
+
+# 
+g+geom_jitter(alpha=0.5,aes(color=season),position=position_jitter(width=.2))
+
+#
+g+geom_violin(alpha=0.5,color="gray")
+
+# 
+g+geom_violin(alpha=0.5,color="gray")+geom_jitter(alpha=0.5,aes(color=season),
+position=position_jitter(width=0.1))+coord_flip()
 
 ##########################################################################
 data(mtcars)
