@@ -1,6 +1,13 @@
 #########################################################
 ###########################dplyr########################
 #########################################################
+
+  # 실습 준비 : Medical Data 이용
+  # age 세급간으로 나눈 age1 변수 만들기
+  # BMI 세급간으로 나눈 BMI1 변수 만들기
+  # chol 세급간으로 나눈 chol2 변수 만들기
+
+
 # https://rpubs.com/justmarkham/dplyr-tutorial
 install.packages("dplyr")
 library(dplyr)
@@ -100,3 +107,8 @@ flights %>%
   select(Month, UniqueCarrier, DayofMonth, DepDelay) %>%
   filter(min_rank(desc(DepDelay)) <= 2) %>%
   arrange(UniqueCarrier, desc(DepDelay))
+  
+  
+  
+
+  
