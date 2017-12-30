@@ -90,6 +90,8 @@ E(g)$width <- egam
 # plot the graph in layout1
 plot(g, layout=layout1)
 
+# R 분석 덧붙임
+# https://rpubs.com/sgeletta/95577
 
           
  ### 한글 모음###
