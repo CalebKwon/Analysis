@@ -33,8 +33,11 @@ head(my_data, n = 3)
 
 #### PCA
 
- 
-
+## decision Tree 
+# http://www.dodomira.com/2016/05/29/564/
+library(party)
+partymod<-ctree(AHD~., data=train)
+plot(partymod)
 
 # GIS
 # 주소를 위도 경도로
