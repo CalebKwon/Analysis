@@ -1,4 +1,42 @@
+# data 1
+# https://www.r-bloggers.com/computing-and-visualizing-pca-in-r/
+wine <- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", sep=",")
 
+# Name the variables
+colnames(wine) <- c("Cvs","Alcohol","Malic acid","Ash","Alcalinity of ash", "Magnesium", "Total phenols", "Flavanoids", "Nonflavanoid phenols", "Proanthocyanins", "Color intensity", "Hue", "OD280/OD315 of diluted wines", "Proline")
+ 
+# The first column corresponds to the classes
+wineClasses <- factor(wine$Cvs)
+
+# data 2
+# https://www.r-bloggers.com/principal-component-analysis-in-r/
+houses <- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data",header = F, na.string = "?")
+colnames(houses) <- c("CRIM", "ZN", "INDUS","CHAS","NOX","RM","AGE","DIS","RAD","TAX","PTRATIO","B","LSTAT","MEDV")
+
+
+# data 3
+# Load data
+data("USArrests")
+my_data <- USArrests
+
+# Remove any missing value (i.e, NA values for not available)
+my_data <- na.omit(my_data)
+
+# Scale variables
+my_data <- scale(my_data)
+
+# View the firt 3 rows
+head(my_data, n = 3)
+
+
+# MDS
+
+#### PCA
+
+ 
+
+
+# GIS
 # 주소를 위도 경도로
 https://brunch.co.kr/@yeowoonbae/4
 
@@ -6,3 +44,8 @@ googlespread sheet
 Geocode by Awesome 설치 그리고 실행
 
 http://www.bloter.net/archives/243114
+
+
+# clustering
+http://www.sthda.com/english/wiki/print.php?id=234
+
