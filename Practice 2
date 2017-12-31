@@ -29,7 +29,8 @@ my_data <- scale(my_data)
 head(my_data, n = 3)
 
 
-# MDS
+#### MDS
+https://rpubs.com/datascientiest/237405
 
 #### PCA
 
