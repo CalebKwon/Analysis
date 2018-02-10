@@ -393,14 +393,25 @@ plot(~calories+fat+sugars,data=UScereal, main="Simple Scatterplot Matrix")
 
 # Practice - 데이터 분석 로직(산점도, 군집 나누기, 그룹별 트랜드)
 hsb2 <- read.table('https://stats.idre.ucla.edu/wp-content/uploads/2016/02/hsb2-2.csv', header=T, sep=",")
-dim()
-summary()
-head()
-attach()
+attach(hsb2)
 
 # 산점도
 plot(read, write)
 cor(read, write)
+
+quantile(math, c(.30, .50, .70))
+
+#### 실습 ####
+# 1. 점수간 상관 관계가 높은 과목들은? 어떻게 적용할 수 있을까? A,B과목이 상관 관계가 높다면, A과목은 높은데 B가 낮으면?
+# 2. SES, Female, Race별로 summary값 해석
+# 3. science 성적 상위 40% 뽑고 하위 40% 그룹 비교, summary값을 가지고 비교.(왜 상위 50% vs. 하위 50% 비교가 아닌가?) 
+# 4. math 성적 상위 40% 뽑고 하위 40% 그룹 비교, summary값을 가지고 비교.(왜 상위 50% vs. 하위 50% 비교가 아닌가?) 
+# 5. write 성적 상위 40% 뽑고 하위 40% 그룹 비교, summary값을 가지고 비교
+# 6. science, math, write 점수 별로 상위 45% 하위 45% 나눠보기, 다시 합쳐(rbind)하여 아래의 각각의 데이터셋 만들기 
+# 7. Box Plot 1) science~female, 2) math ~ female, 3) write~female 만들어보기
+
+
+
 
 # pch for plotting characters, or symbol to use
 # see help(points) for more information on pch
@@ -507,11 +518,25 @@ p <- plot_ly(mtcars, x = ~wt, y = ~hp, z = ~qsec, color = ~am, colors = c('#BF38
 
 
 ### 실습 ###
-# medical data 이용
-# 조건 age1(Hage,Lage) 이용하여 BMI와 chol, insulin의 관계 3D로 표현하기
 # hsb2 data 이용
-# 수학 성적을 두개의 범주형 데이터로 나누고 나머지 점수들 중 세가지를 선택하여 3D로 
+# 1. math 점수 3단계로 나누기 (30%미만, 30%이상~%70%미만, 70%이상~ 100%), Hmath, Mmath, Lmath로 명목 변수로 나누기
+# 2. 조건 (Hage,Lage) 이용하여 science, write, read 3축으로 3D plot 그리기
 
+# 참고-순서 바꾸기, 이름 변경
+# newsOrder <- factor(hsb2$female, levels=c(1,0))
+# boxplot(science~newsOrder,data = hsb2)
+# boxplot(science~newsOrder,data = hsb2,names= c("female","male"))
+
+library(plotly)
+
+box_plots1<-plot_ly(y=hsb2$science,type="box",boxpoints="all")%>%
+           add_trace(y=hsb2$math)
+
+box_plots2<-plot_ly(x=hsb2$science,type="box",boxpoints="all")%>%
+           add_trace(x=hsb2$math)
+
+hsb2$female<-as.factor(hsb2$female)
+p <- plot_ly(hsb2, y = ~math, color = ~female, type = "box")
 
 # Next Step
 # dplyr
