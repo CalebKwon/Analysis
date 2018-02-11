@@ -126,10 +126,19 @@ mj.data
 
 t.test(scores ~ groups)
 
-###################### 실습 #####################
-# hsb2 1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가?
-# medical data 1) age1 변수를 만든다. age<=45 group, age>46 group 
-#              2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가?
+# 실습
+ 
+
+
+######################################## 실습 #############################################
+# marijuana smoking데이터 분석의 순서를 따르시오.
+# hsb2 데이터 이용  1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가?
+# medical data    1) age1 변수를 만든다. age<=45 group, age>46 group 
+#                 2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가?
+#                 3) age 20,30대 vs. age 50,40대 두 그룹의 평균값 비교 chol, insulin, HDL,LDL
+# mtcar데이터 이용  1) am에 따른 wt,hp,qsec,mpg 평균값의 비교
+# mtcar데이터 이용  2) mtcar데이터 이용, cyl(4vs6, 6vs8)에 따른 wt,hp,qsec,mpg 평균값의 비교
+
 
 
 # If the normality assumption of the t-test is violated, and the sample sizes are two small to heal,
@@ -189,10 +198,15 @@ t.test(a,b, paired=TRUE, alt="less")
 # a가 b보다 큰가? 
 t.test (a, b, paired = TRUE, alt = "greater")
 
-###################### 실습 #####################
-# hsb2 1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가?-> 평균값이 다르다면 남성이 더 잘하는가 여성이 더 잘하는가? 
-# medical data 1) age1 변수를 만든다. age<=45 group, age>46 group 
-#              2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가? -> 평균값이 다르다면 젊은층이 수치가 높은가 아니면 낮은가?
+######################################## 실습 #############################################
+# marijuana smoking데이터 분석의 순서를 따르시오.
+# hsb2 데이터 이용  1) 성별에 따라 수학과 과학 점수의 평균값이 다른가 같은가? -> 어디가 큰가?
+# medical data    1) age1 변수를 만든다. age<=45 group, age>46 group -> 어디가 큰가?
+#                 2) 각 그룹에 따라 BMI값이 chol, insulin, HDL,LDL의 평균값이 다른가? -> 어디가 큰가?
+#                 3) age 20,30대 vs. age 50,40대 두 그룹의 평균값 비교 chol, insulin, HDL,LDL -> 어디가 큰가?
+# mtcar데이터 이용  1) am에 따른 wt,hp,qsec,mpg 평균값의 비교 -> 어디가 큰가?
+# mtcar데이터 이용  2) mtcar데이터 이용, cyl(4vs6, 6vs8)에 따른 wt,hp,qsec,mpg 평균값의 비교 -> 어디가 큰가?
+
 
 # One Sample t-test
 data = c(52.7, 53.9, 41.7, 71.5, 47.6, 55.1,
@@ -340,14 +354,25 @@ chisq.test(tbl)
 # Smoke Vs. Sex
 # Sex Vs. Exer
 
+
+######################################## 실습 #############################################
 # 연속 변수를 명목 변수로 구하는 방법 기억 하시나요?
+# 50%를 기준으로 각각의 연속 변수를 두개의 명목 변수로 나누어 비교 합니다.
 
 # Medical Data
 BMI Vs. Chol
 Age Vs. BMI
+BMI VS. insuline
 
 # hsb2
 gender Vs. Math
 gender Vs. read
 race 1,2 vs. Math
 ses 1,2 vs. Math
+
+# mtcars
+am vs. mpg
+am vs. wt
+wt vs. mpg  
+disp vs. wt
+disp vs. mpg
