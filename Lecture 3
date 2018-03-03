@@ -3,3 +3,145 @@
 # MDS
 # PCS 
 # Clustering
+
+# dataset
+# http://appliedpredictivemodeling.com/data/
+
+# logistic Regression
+# https://stats.idre.ucla.edu/r/dae/logit-regression/
+
+
+## view the first few rows of the data
+# The dataset contains four variables: admit, gre, gpa, and prestige:
+
+# admit is a binary variable. It indicates whether or not a candidate was admitted into UCLA (admit = 1) our not (admit = 0).
+# gre is the GRE score. GRE stands for Graduate Record Examination.
+# gpa stands for Grade Point Average.
+# prestige is the prestige of an applicant alta mater, with 1 being the highest (high prestige) and 4 as the lowest (not prestigious).
+
+data<-read.csv("/Users/byounggugkwon/Desktop/admissions.csv")
+
+data$prestige <-as.factor(data$prestige)
+str(data)
+
+train<-data[1:200, ]
+test<-data[201:400, ]
+model <- glm(admit ~ gre + gpa + prestige, data =train, family = "binomial")
+summary(model)
+
+
+
+
+
+
+
+
+
+
+
+
+# 의사 결정 나무
+install.packages("party")
+library(party)
+
+library(datasets)
+data(airquality)
+
+formula<-Temp~Solar.R+Wind+Ozone
+air_ctree<-ctree(formula,data=airquality)
+plot(air_ctree)
+
+# 실습
+# 1. diamond가격 분석
+library(ggplot2)
+data(diamond)
+formula<-price~
+
+# 
+data(mpg)
+formula<-hyw~
+
+
+
+df<-read.csv('http://www-bcf.usc.edu/~gareth/ISL/Heart.csv')
+str(df)
+
+library(party)
+partymod<-ctree(AHD~., data=train)
+plot(partymod)
+
+
+# more fancy plot
+install.packages("caret")
+library(caret)
+set.seed(1000) #reproducability setting
+intrain<-createDataPartition(y=df$AHD, p=0.7, list=FALSE) 
+train<-df[intrain, ]
+test<-df[-intrain, ]
+
+library(rpart)
+rpartmod<-rpart(AHD~. , data=train, method="class")
+plot(rpartmod)
+text(rpartmod)
+
+install.packages("rattle")				# Fancy tree plot
+install.packages("rpart.plot")			# Enhanced tree plots
+
+library(rattle)				# Fancy tree plot
+library(rpart.plot)			# Enhanced tree plots
+library(RColorBrewer)			# Color selection for fancy tree 
+fancyRpartPlot(rpartmod)
+
+
+
+
+
+# GIS
+install.packages("ggplot2")
+install.packages("ggmap")
+install.packages("ggproto")
+
+library(ggmap)
+# 한글로 검색하면 오류, 주소->위도 경도
+geocode('Seoul', source='google')
+# geocode(enc2utf8('서울'), source='google')
+# geocode('Seoul&language=ko', source='google', output = 'latlona')
+geocode('Seoul', source='google', output = 'latlona')
+geocode(enc2utf8('서울'), source='google')
+geocode(enc2utf8('서울'), source='google',output = 'latlona')
+
+ggmap(get_map(location='south korea',zoom=7))
+myLocation<-c(lat=35.95,lon=128.25)
+ggmap(get_map(location=myLocation,zoom=7))
+
+qmap('seoul',zoom=7)
+getwd()
+
+map<-get_map(location=myLocation,zoom=7)
+
+
+qmap('seoul',zoom=7)
+getwd()
+wifi<-read.csv("/Users/byounggugkwon/Desktop/wifi.csv")
+
+str(wifi)
+# 위치->점
+ggmap(map)+
+geom_point(data=wifi,aes(x=lon,y=lat,color=company))
+
+# 등고선
+ggmap(map)+
+stat_density_2d(data=wifi,aes(x=lon,y=lat))
+
+# 
+ggmap(map)+
+stat_density_2d(data=wifi,aes(x=lon,y=lat,fill=..level..,alpha=..level..),geom='polygon',size=2,bins=30)
+
+
+# 실습
+# 초등학교 위도 경도
+https://www.data.go.kr/dataset/15021148/standard.do
+# 대구 가로등
+https://www.data.go.kr/dataset/3055368/fileData.do
+# 공공 데이터
+https://www.data.go.kr/
