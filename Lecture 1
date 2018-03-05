@@ -229,10 +229,49 @@ UScereal$sugars1
 # bar plot(막대 그래프) 만들기
 counts<-UScereal$sugars1
 table(counts)
+
 # barplot
 barplot(table(counts), main="sugars Distribution", xlab="Amount of Suagrs")
+
 # boxplot
 boxplot(sugars~sugars1,data=UScereal, main="",xlab="", ylab="")
+
+data(mtcars)
+head(mtcars)
+# box plot
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon")
+
+# 박스 라벨 기울기 바꾸기
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",las=2)
+
+# 각각의 박스 이름 바꾸기
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",names=c("4실린더","6실린더","8실린더"))
+
+# 각각의 박스 색 입히기 
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",names=c("4실린더","6실린더","8실린더"),col=c("red","sienna","royalblue2"))
+
+# Box 순서 바꾸기
+mtcars$cyl<-factor(mtcars$cyl, levels=c(8, 6, 4))
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",names=c("4실린더","6실린더","8실린더"),col=c("red","sienna","royalblue2"))
+
+# 가로로 바꾸기
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",names=c("4실린더","6실린더","8실린더"),col=c("red","sienna","royalblue2"),horizontal=TRUE)
+
+# 레전드 더하기
+boxplot(mpg~cyl,data=mtcars, main="Car Milage Data", 
+   xlab="Number of Cylinders", ylab="Miles Per Gallon",names=c("4실린더","6실린더","8실린더"),col=c("red","sienna","royalblue2"),horizontal=TRUE)
+legend("bottomright", inset=.02, title="Number of Cylinders",
+   c("4","6","8"), fill=c("red","sienna","royalblue2"), horiz=TRUE, cex=0.8)
+# "bottomright", "bottom", "bottomleft", "left", "topleft", "top", 
+# "topright", "right" and "center".
+
+
 
 ### 실습 ###
 
