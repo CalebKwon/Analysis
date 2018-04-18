@@ -1,0 +1,18 @@
+library(MASS)
+
+# 1. 
+data(UScereal)
+head(UScereal)
+# y:calories, x:선택(p-value참고)
+
+# 2.
+data(mpg)
+head(mpg)dim(mpg)
+# y:hwy, x:선택(p-value참고)
+# cyl별로 세개의 모델 수립 및 각 모델 비교
+
+# 3
+hsb2
+# y:math, x:과목에서만 선택(p-value참고)
+# ses별로 세개의 모델 수립 및 각 모델 비교
+
