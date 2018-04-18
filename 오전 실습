@@ -1,4 +1,4 @@
-실습
+ 실습
 
 
 hsb2데이터 이용
@@ -23,7 +23,7 @@ hsb2데이터 이용
 
 3. ggplot2를 이용
 (1)  bar graph-각 race bar별로 ses의 비율을 시각화 하시오.
-(2) math와 write의 관계를 나타내는 산점도를 race별로 각각 시각화 하시오.
+(2) math와 write의 관계를 나타내는 산점도를 race별로 각각 그래프를 달리하여 시각화 하시오.
 (3) math와 write의 관계를 나타내는 산점도를 그리고 그 위에race가 3의 smooth line을 그리시오.
 (4) math의 평균값을 기준으로math1 변수를 만드시오(Hmath, Lmath) 그 이후 race별로 각 race에 포함된 Hmath와 Lmath의 비율을 시각화 하시오.
 
