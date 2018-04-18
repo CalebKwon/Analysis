@@ -1,0 +1,30 @@
+실습
+
+
+hsb2데이터 이용
+
+1. female==1인 경우와 female==0으로 나눠
+
+두 집단의 math 점수를 비교하세요.
+(1)	density plot을 이용 비교.
+(2)	Box plot이용 비교(x-축, y축이름, 메인 이름 포함)
+(3)	각 성별로 추세선 그리기. 성별로 plot의 색을 달리하시오( X-축: math Y-축:write )
+(4)	3-D plot을 그리시오. Race별로 색을 달리 하시오.( ( X-축: math, Y-축:write, Z축:science )
+(5)	두 집단의 평균의 차이를T-Test를 통해 검증하시오.
+(6)	 같은지, 다른지, 어느쪽 점수가 더 높은지 검증하시오.
+
+
+2. dplyr패키지를 이용
+(1) race 별로 group_by하여
+      math, write, science,의 평균과 분산을 구하시오.
+(2) race별 여성과 남성의 비율을 계산하시오.
+(3) 각 race별 가장 높은점수와 그다음 높은 점수를 구하시오.
+
+
+3. ggplot2를 이용
+(1)  bar graph-각 race bar별로 ses의 비율을 시각화 하시오.
+(2) math와 write의 관계를 나타내는 산점도를 race별로 각각 시각화 하시오.
+(3) math와 write의 관계를 나타내는 산점도를 그리고 그 위에race가 3의 smooth line을 그리시오.
+(4) math의 평균값을 기준으로math1 변수를 만드시오(Hmath, Lmath) 그 이후 race별로 각 race에 포함된 Hmath와 Lmath의 비율을 시각화 하시오.
+
+
