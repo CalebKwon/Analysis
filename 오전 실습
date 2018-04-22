@@ -28,3 +28,98 @@ hsb2데이터 이용
 (4) math의 평균값을 기준으로math1 변수를 만드시오(Hmath, Lmath) 그 이후 race별로 각 race에 포함된 Hmath와 Lmath의 비율을 시각화 하시오.
 
 
+
+library(ggplot2)
+library(dplyr)
+library(plotly)
+
+hsb2<-read.csv(file.choose())
+
+hsb2$math1[hsb2$math>=mean(hsb2$math)]<-"Hmath"
+hsb2$math1[hsb2$math<mean(hsb2$math)]<-"Lmath"
+
+female<-hsb2[hsb2$female==1,]
+male<-hsb2[hsb2$female==0,]
+
+View(hsb2)
+## 1
+# 1.
+
+par(mfrow=c(1,2)) 
+plot(density(female$math),"여학생 수학점수")
+plot(density(male$math),"남학생 수학점수")
+
+# 2. 
+boxplot(math~female,data=hsb2,names=c("남자","여자"))
+
+# 3.
+with(female,plot(math,write,main="수학과 쓰기",col="red"))
+with(male,points(math,write,main="수학과 쓰기",col="blue"))
+with(female,abline(lsfit(math, write), col="red"))
+with(male,abline(lsfit(math, write), col="blue"))
+legend(62, 45, c("female", "male"), pch=c(20, 20),cex=.8, col=c("red", "blue"))
+
+# 4.
+
+
+
+hsb2$race <- as.factor(hsb2$race)
+p <- plot_ly(hsb2, x = ~math, y = ~write, z = ~science, color = ~race, colors = c('red', 'blue',"black","green")) %>%
+
+  add_markers() %>%
+
+  layout(scene = list(xaxis = list(title = '수학'),
+
+                      yaxis = list(title = '쓰기'),
+
+                      zaxis = list(title = '과학')))
+
+
+
+# 5.
+t.test(female$math,male$math)
+
+# 6.
+
+
+## 2
+# 1
+hsb2 %>%
+  group_by(race) %>%
+  summarise_each(funs(mean(., na.rm=TRUE), sd(., na.rm=TRUE)), write,math,science)
+
+# 2.
+
+hsb2 %>%
+  group_by(race) %>%
+  summarise_each(funs(mean), female)
+
+
+# 3.
+hsb2 %>%
+  group_by(race) %>%
+  select(race, math) %>%
+  filter(min_rank(desc(math)) <= 2) %>%
+  arrange(race, desc(math))
+
+## 3
+# 1
+hsb2$ses<-as.factor(hsb2$ses)
+hsb2$race<-as.factor(hsb2$race)
+
+ggplot(data = hsb2) + 
+  geom_bar(mapping = aes(x = race, fill = ses), position = "fill")
+
+# 2. 
+ggplot(data = hsb2) + 
+  geom_point(mapping = aes(x = math, y = write, color = race))
+
+# 3.
+ggplot(data = hsb2, mapping = aes(x = math, y = write)) + 
+  geom_point() + 
+  geom_smooth(data = subset(hsb2, race == 3))
+
+# 4.
+ggplot(data = hsb2) + 
+  geom_bar(mapping = aes(x = race, fill = math1), position = "fill")
+ 
