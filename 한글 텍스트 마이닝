@@ -45,31 +45,10 @@ result2 <- gsub("??", "", result2)
 result2 <- gsub("?", "", result2)
 
 
-안녕하세요. 강사님
 
-R수강생 하민호 입니다.
 
- 
 
-서울시 강북구의 CCTV 설치현황과 경찰서 관할구역 맴핑한 실습파일입니다.
-
- 
-
-cctv 위치는 공공데이터포탈에서 다운받았고,
-
-(data출처 : https://www.data.go.kr/dataset/15021660/fileData.do)
-
- 
-
-지구대 관할구역은 'R라뷰'라는 책의 내용을 참고했습니다.
-
- 
-
-이상입니다.
-
- 
-
-####이하는 wordcloud2 실습한 예제입니다####
+###이하는 wordcloud2 실습한 예제입니다####
 library(NLP)
 
 library(tm)
