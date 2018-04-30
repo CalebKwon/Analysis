@@ -5,3 +5,41 @@
 # Text Mining
 # Social Network Analysis
 # Time Series Analysis
+
+#########################################
+################ clustering #############
+#########################################
+# http://www.sthda.com/english/wiki/print.php?id=234
+
+data("USArrests")
+my_data <- USArrests
+
+# Remove any missing value (i.e, NA values for not available)
+my_data <- na.omit(my_data)
+
+# Scale variables
+my_data <- scale(my_data)
+
+# View the firt 3 rows
+head(my_data, n = 3)
+
+# Install factoextra, for elegant visualization
+install.packages("factoextra")
+
+# Install cluster package
+install.packages("cluster")
+
+
+library("cluster")
+library("factoextra")
+
+# get_dist(): for computing a distance matrix between the rows of a data matrix. Compared to the standard dist() function, it supports correlation-based distance measures including “pearson”, “kendall” and “spearman” methods.
+# fviz_dist(): for visualizing a distance matrix
+
+res.dist <- get_dist(USArrests, stand = TRUE, method = "pearson")
+
+fviz_dist(res.dist, 
+          gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+          
+          
+
